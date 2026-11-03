@@ -117,6 +117,35 @@
   }
   </script>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Responsive tablet crutch: keep the generator grid readable when the screen is narrow but still desktop-ish. */
+    @media (max-width: 880px) and (min-width: 561px) {
+      .generate-grid,
+      .scan-grid,
+      .hero,
+      .why,
+      .faq,
+      .open-source,
+      .site-header,
+      .site-footer {
+        padding-right: clamp(14px, 5vw, 22px);
+        padding-left: clamp(14px, 5vw, 22px);
+      }
+      .generate-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .scan-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      textarea#qr-text {
+        min-height: 88px;
+        font-size: 15px;
+      }
+    }
+  </style>
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
