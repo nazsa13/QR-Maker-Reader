@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Free QR Code Generator &amp; Scanner — Make &amp; Read QR Codes Online | QR Maker &amp; Reader</title>
+  <meta name="description" content="Create and scan QR codes free in your browser — no sign-up, no ads, no uploads. Generate custom PNG/SVG QR codes and read them with your camera. 100% private, instant, offline-capable." />
+  <meta name="keywords" content="QR code generator, QR code scanner, free QR code, make QR code, read QR code, QR reader online, scan QR code with camera, QR code PNG, SVG QR code, private QR generator" />
+  <link rel="canonical" href="https://qr-maker-reader.vercel.app/" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="theme-color" content="#0d0f1a" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://qr-maker-reader.vercel.app/" />
+  <meta property="og:site_name" content="QR Maker &amp; Reader" />
+  <meta property="og:title" content="Free QR Code Generator &amp; Scanner — Make &amp; Read QR Codes Online" />
+  <meta property="og:description" content="Create and scan QR codes free in your browser — no sign-up, no ads, no uploads. 100% private: your data never leaves your device." />
+  <meta property="og:image" content="https://qr-maker-reader.vercel.app/assets/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="QR Maker &amp; Reader — free browser-based QR code generator and scanner" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free QR Code Generator &amp; Scanner — Make &amp; Read QR Codes Online" />
+  <meta name="twitter:description" content="Make custom PNG/SVG QR codes and scan them with your camera. No sign-up, no ads, no uploads — everything runs in your browser." />
+  <meta name="twitter:image" content="https://qr-maker-reader.vercel.app/assets/og.png" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/favicon.png" />
+
+  <!-- Structured data: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "QR Maker & Reader",
+    "alternateName": "Free QR Code Generator & Scanner",
+    "url": "https://qr-maker-reader.vercel.app/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (web browser)",
+    "browserRequirements": "Requires JavaScript. Camera scanning requires getUserMedia support (HTTPS).",
+    "description": "Free online tool to generate QR codes (PNG and SVG, custom colors) and scan QR codes with your device camera or from an image. Runs entirely client-side — no data is uploaded to any server.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": [
+      "Generate QR codes as PNG or SVG",
+      "Custom foreground and background colors",
+      "Four error-correction levels (L, M, Q, H)",
+      "Scan QR codes with the device camera",
+      "Decode QR codes from uploaded images",
+      "Works offline after first load; 100% client-side"
+    ],
+    "author": { "@type": "Organization", "name": "QR Maker & Reader", "url": "https://github.com/nazsa13/QR-Maker-Reader" },
+    "keywords": "QR code generator, QR code scanner, QR reader, free QR code, scan QR with camera"
+  }
+  </script>
+
+  <!-- Structured data: FAQPage (GEO: cited by AI search engines) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this QR code generator really free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. QR Maker & Reader is 100% free with no sign-up, no accounts, no ads and no limits on how many QR codes you create. The source code is MIT-licensed and available on GitHub." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are my QR codes private? Does my data get uploaded?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The app runs 100% client-side. Camera frames for scanning and any text you encode never leave your device — no images or text are uploaded to any server, and there is no tracking of your QR content." }
+      },
+      {
+        "@type": "Question",
+        "name": "How much damage can a QR code survive?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Per the QR error-correction spec (ISO/IEC 18004), levels L, M, Q and H can restore codewords damaged up to approximately 7%, 15%, 25% and 30% respectively. Choose level H if your code may be partially covered, printed small or displayed on worn surfaces." }
+      },
+      {
+        "@type": "Question",
+        "name": "What size border should a QR code have?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The QR specification (ISO/IEC 18004) requires a quiet zone of at least 4 modules around the code so scanners can find its edges. This tool uses a 4-module border by default; scanning usually fails below that in low light or at an angle." }
+      },
+      {
+        "@type": "Question",
+        "name": "PNG or SVG for my QR code — which should I use?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use SVG for print, posters and business cards: it scales to any size with perfectly sharp edges and no pixelation. Use PNG for web pages, chat apps and social-media previews where raster images are expected." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I scan a QR code without installing an app?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Open this page in your mobile browser, switch to the Scan tab and allow camera access — most modern smartphones (Android and iOS) have built-in QR support, and this site also decodes QR codes from images you upload." }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured data: HowTo -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to create a QR code for free",
+    "description": "Generate a QR code for any link or text in under a minute, with no account and no watermarks.",
+    "totalTime": "PT1M",
+    "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "0" },
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter your content", "text": "Type or paste the URL, plain text, Wi-Fi string or contact data you want to encode into the input box." },
+      { "@type": "HowToStep", "position": 2, "name": "Customize (optional)", "text": "Pick colors and an error-correction level; use level H if the code may be covered or printed small." },
+      { "@type": "HowToStep", "position": 3, "name": "Download", "text": "Download as PNG for screens or SVG for print, then share your QR code anywhere." }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="QR Maker &amp; Reader home">
+      <img src="/assets/favicon-32.png" alt="" width="32" height="32" />
+      <span>QR Maker <span class="amp">&amp;</span> Reader</span>
+    </a>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+      <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <span>Theme</span>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Free QR Code Generator &amp; Scanner — online, instant, and 100% private</h1>
+      <p>
+        <strong>QR Maker &amp; Reader</strong> creates QR codes for links and text in seconds and reads QR codes
+        straight from your camera — free, with no sign-up, no ads and no uploads.
+        <strong>Everything runs inside your browser</strong>: the QR you generate or the camera frame you scan
+        is never sent to any server.
+      </p>
+    </section>
+
+    <section class="app" id="app" aria-label="QR code tool">
+      <div class="tabs" role="tablist">
+        <button class="tab active" id="tab-generate" role="tab" aria-selected="true" aria-controls="panel-generate">Create QR</button>
+        <button class="tab" id="tab-scan" role="tab" aria-selected="false" aria-controls="panel-scan">Scan QR</button>
+      </div>
+
+      <!-- ===== GENERATE ===== -->
+      <div class="panel" id="panel-generate" role="tabpanel" aria-labelledby="tab-generate">
+        <div class="generate-grid">
+          <form class="generate-form" onsubmit="return false;">
+            <label for="qr-text">URL or text to encode</label>
+            <textarea id="qr-text" rows="3" placeholder="https://example.com — or any text, Wi-Fi string, contact data…" spellcheck="false"></textarea>
+
+            <div class="row">
+              <div class="field">
+                <label for="qr-fill">Dot color</label>
+                <input type="color" id="qr-fill" value="#0d0f1a" />
+              </div>
+              <div class="field">
+                <label for="qr-back">Background</label>
+                <input type="color" id="qr-back" value="#ffffff" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="qr-size">Size (px)</label>
+                <input type="number" id="qr-size" min="128" max="2048" step="32" value="512" />
+              </div>
+              <div class="field">
+                <label for="qr-ec">Error correction</label>
+                <select id="qr-ec">
+                  <option value="L">L — low (7%)</option>
+                  <option value="M" selected>M — medium (15%)</option>
+                  <option value="Q">Q — quartile (25%)</option>
+                  <option value="H">H — high (30%)</option>
+                </select>
+              </div>
+            </div>
+            <p class="hint">Higher error correction stays scannable when partially covered — <a href="#faq">see FAQ</a>.</p>
+          </form>
+
+          <div class="preview-col">
+            <canvas id="qr-canvas" width="512" height="512" aria-label="QR code preview"></canvas>
+            <div class="downlinks">
+              <button class="btn primary" id="dl-png">Download PNG</button>
+              <button class="btn" id="dl-svg">Download SVG</button>
+              <button class="btn" id="copy-img">Copy image</button>
+            </div>
+            <p id="gen-status" class="status" role="status"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SCAN ===== -->
+      <div class="panel hidden" id="panel-scan" role="tabpanel" aria-labelledby="tab-scan">
+        <div class="scan-grid">
+          <div class="scan-cam">
+            <h2>Scan with your camera</h2>
+            <video id="video" muted playsinline></video>
+            <canvas id="cam-canvas" class="hidden"></canvas>
+            <div class="downlinks">
+              <button class="btn primary" id="cam-start">Start camera</button>
+              <button class="btn" id="cam-stop" disabled>Stop</button>
+            </div>
+            <p class="status" id="cam-status">Camera access needs HTTPS. Nothing is uploaded — frames stay on your device.</p>
+          </div>
+
+          <div class="scan-file">
+            <h2>Decode an image</h2>
+            <label class="dropzone" id="dropzone" for="file-input">
+              <input type="file" id="file-input" accept="image/*" hidden />
+              <span>Click or drop a QR image here</span>
+            </label>
+            <p class="status" id="scan-status" role="status"></p>
+            <div id="scan-result" class="result hidden"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="why">
+      <h2>Why use QR Maker &amp; Reader instead of typical QR websites?</h2>
+      <table>
+        <thead>
+          <tr><th scope="col">Feature</th><th scope="col">QR Maker &amp; Reader</th><th scope="col">Typical QR sites</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Price</td><td>Free forever, MIT open source</td><td>Free tier with usage limits; “dynamic” QRs expire</td></tr>
+          <tr><td>Sign-up</td><td>None</td><td>Account often required</td></tr>
+          <tr><td>Ads &amp; trackers</td><td>Zero</td><td>Ad banners, redirects, tracking pixels</td></tr>
+          <tr><td>Your data</td><td>Never uploaded — runs in your browser</td><td>Encoded content processed server-side</td></tr>
+          <tr><td>Requested QR lifespan</td><td>Permanent (static)</td><td>Dynamic QR links can stop working</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="faq" id="faq">
+      <h2>QR code FAQ</h2>
+
+      <h3>Is this QR code generator really free?</h3>
+      <p>Yes — 100% free with no sign-up, no accounts, no ads and no limits. The <a href="https://github.com/nazsa13/QR-Maker-Reader" rel="noopener noreferrer" target="_blank">source code is MIT-licensed and on GitHub</a>, so you can also run it locally.</p>
+
+      <h3>Are my QR codes private? Does my data get uploaded?</h3>
+      <p>The app is fully client-side. Camera frames and any text you encode never leave your device — no upload, no tracking of your QR content.</p>
+
+      <h3>How much damage can a QR code survive?</h3>
+      <p>Per the QR error-correction spec (ISO/IEC 18004), levels L, M, Q and H can restore codewords damaged up to approximately <strong>7%, 15%, 25% and 30%</strong> respectively. Choose <strong>H</strong> if the code may be partially covered, printed small or displayed on worn surfaces.</p>
+
+      <h3>What size border should a QR code have?</h3>
+      <p>The QR specification requires a quiet zone of at least <strong>4 modules</strong> around the code so scanners can find its edges. This tool uses a 4-module border by default; scanning often fails below that.</p>
+
+      <h3>PNG or SVG — which should I use?</h3>
+      <p>Use <strong>SVG for print</strong> (posters, business cards): it scales to any size with sharp edges. Use <strong>PNG for screens</strong>: web pages, chat apps and social-media previews.</p>
+
+      <h3>How do I scan a QR code without installing an app?</h3>
+      <p>Open this page on your phone, switch to <strong>Scan QR</strong> and allow camera access. You can also decode a QR from an image you already saved — just drop it in the panel.</p>
+    </section>
+
+    <section class="open-source">
+      <h2>Prefer the command line?</h2>
+      <p>
+        The <a href="https://github.com/nazsa13/QR-Maker-Reader" rel="noopener noreferrer" target="_blank">QR Maker &amp; Reader repo</a> includes a Python CLI:
+        <code>python qr_cli.py generate "https://example.com" -o link.png</code> generates, and
+        <code>python qr_cli.py read link.png</code> decodes — the same privacy guarantee, no browser needed.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="https://github.com/nazsa13/QR-Maker-Reader" rel="noopener noreferrer" target="_blank">GitHub</a>
+      · Built with <strong>zero trackers</strong> · QR codes generated here never expire
+    </p>
+  </footer>
+
+  <script src="/vendor/qrcode.min.js" defer></script>
+  <script src="/vendor/jsqr.min.js" defer></script>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>

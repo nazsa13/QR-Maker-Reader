@@ -1,0 +1,5 @@
+qrcode[pil]>=7.4
+opencv-python>=4.8
+# Optional but recommended: enables decoding more barcode types.
+# Windows: needs the Visual C++ Redistributable installed.
+pyzbar>=0.1.9

@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# Explicitly welcome AI search crawlers (GEO)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# OAI-SearchBot is OpenAI's search crawler
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+Sitemap: https://qr-maker-reader.vercel.app/sitemap.xml
