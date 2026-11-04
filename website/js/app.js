@@ -62,103 +62,33 @@
   /* ---------------- Theme toggle ---------------- */
   const themeToggle = $("theme-toggle");
 
-  /* ---------------- Language toggle ---------------- */
-  const langToggle = $("lang-toggle");
-  const CURRENT_LANG_KEY = "qr-maker-lang";
-  const LANG_EN = "en";
-  const LANG_AR = "ar";
+  const THEME_KEY = "qr-maker-theme";
+  const DARK = "theme-dark";
+  const LIGHT = "theme-light";
 
-  function applyLang(lang) {
-    const html = document.documentElement;
-    html.setAttribute("lang", lang);
-    html.dir = lang === LANG_AR ? "rtl" : "ltr";
-    langToggle.setAttribute("aria-pressed", lang === LANG_AR);
-    document.getElementById("lang-en").style.display = lang === LANG_EN ? "inline" : "none";
-    document.getElementById("lang-ar").style.display = lang === LANG_AR ? "inline" : "none";
-
-    // Arabic translations for UI text
-    const arTexts = {
-      qrTextPlaceholder: "رابط أو نص لترميز",
-      dlPng: "تحميل PNG",
-      dlSvg: "تحميل SVG",
-      copyImg: "نسخ للصورة",
-      genStatusOk: "✅",
-      genStatusErr: "⚠️",
-      hint: "تصحيح الأخطاء الأعلى يبقى القابل للمسح عند التعطيل الجزئي — #{seeFAQ}",
-      tabGenerate: "إنشاء QR",
-      tabScan: "مسح QR",
-      camStart: "بدء الكاميرا",
-      camStop: "إيقاف",
-      camStatusInit: "📷 اضبط على رمز QR — يتم التفريغ…",
-      camStatusOk: "✅已解码!",
-      browseFile: "اختر صورة"
-    };
-    const enTexts = {
-      qrTextPlaceholder: "URL or text to encode",
-      dlPng: "Download PNG",
-      dlSvg: "Download SVG",
-      copyImg: "Copy image",
-      genStatusOk: "✅",
-      genStatusErr: "⚠️",
-      hint: "Higher error correction stays scannable when partially covered — #{seeFAQ}",
-      tabGenerate: "Create QR",
-      tabScan: "Scan QR",
-      camStart: "Start camera",
-      camStop: "Stop",
-      camStatusInit: "📷 Point at a QR code — decoding…",
-      camStatusOk: "✅ Decoded!",
-      browseFile: "Click or drop a QR image here"
-    };
-
-    const t = lang === LANG_AR ? arTexts : enTexts;
-
-    // Apply placeholder and text translations
-    if (textEl) {
-      textEl.placeholder = t.qrTextPlaceholder;
-    }
-    $("dl-png").textContent = t.dlPng;
-    $("dl-svg").textContent = t.dlSvg;
-    $("copy-img").textContent = t.copyImg;
-    // genStatus is already handled via setError()
-    const hintEl = $("hint");
-    if (hintEl) {
-      hintEl.textContent = t.hint;
-    }
-    if (tabGenerate) {
-      tabGenerate.textContent = t.tabGenerate;
-    }
-    if (tabScan) {
-      tabScan.textContent = t.tabScan;
-    }
-    const camStartEl = $("cam-start");
-    if (camStartEl) {
-      camStartEl.textContent = t.camStart;
-    }
-    const camStopEl = $("cam-stop");
-    if (camStopEl) {
-      camStopEl.textContent = t.camStop;
-    }
-    const camStatusEl = $("cam-status");
-    if (camStatusEl) {
-      camStatusEl.textContent = t.camStatusInit;
-    }
-
-    try { localStorage.setItem(CURRENT_LANG_KEY, lang); } catch (e) { /* ignore */ }
+  function applyTheme(theme) {
+    document.body.classList.remove(DARK, LIGHT);
+    document.body.classList.add(theme === "light" ? LIGHT : DARK);
+    themeToggle.setAttribute("aria-pressed", String(theme === "light"));
+    try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* ignore */ }
   }
 
-  function readSavedLang() {
+  function readSavedTheme() {
     let saved = null;
-    try { saved = localStorage.getItem(CURRENT_LANG_KEY); } catch (e) { /* ignore */ }
-    if (saved === LANG_EN || saved === LANG_AR) return saved;
-    return LANG_EN; // default to English
+    try { saved = localStorage.getItem(THEME_KEY); } catch (e) { /* ignore */ }
+    if (saved === "light" || saved === "dark") return saved;
+    return null;
   }
 
-  const savedLang = readSavedLang();
-  applyLang(savedLang);
+  if (readSavedTheme() === "light") {
+    applyTheme("light");
+  } else {
+    applyTheme("dark");
+  }
 
-  langToggle.addEventListener("click", () => {
-    const next = langToggle.getAttribute("aria-pressed") === "true" ? LANG_EN : LANG_AR;
-    applyLang(next);
+  themeToggle.addEventListener("click", () => {
+    const next = document.body.classList.contains(LIGHT) ? "dark" : "light";
+    applyTheme(next);
   });
 
   $("dl-png").addEventListener("click", () => {
@@ -180,34 +110,24 @@
   });
 
   /* SVG download */
-  /* Copy image (Clipboard API, graceful fallback) */
-  $("copy-img").addEventListener("click", async () => {
-    try {
-      const blob = await new Promise((res, rej) =>
-        canvas.toBlob((b) => (b ? res(b) : rej(new Error("no blob"))), "image/png")
-      );
-      await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
-      setError(null, "✅ Image copied to clipboard.");
-    } catch (e) {
-      setError(null, "⚠️ Clipboard blocked — use Download instead.");
-    }
-  });
-
-  $("dl-png").addEventListener("click", () => {
+  $("dl-svg").addEventListener("click", () => {
     const data = textEl.value.trim();
     if (!data) { setError(null, "Type a link or text first."); return; }
-    window.QRCode.toCanvas(canvas.cloneNode(), data, {
+    window.QRCode.toString(data, {
+      type: "svg",
       width: Math.min(Math.max(parseInt(sizeEl.value, 10) || 512, 128), 2048),
       margin: 4,
       errorCorrectionLevel: ecEl.value,
       color: { dark: fillEl.value, light: backEl.value },
-    }, function (err, c) {
+    }, function (err, svg) {
       if (err) { setError(null, "⚠️ Export failed."); return; }
+      const blob = new Blob([svg], { type: "image/svg+xml" });
       const a = document.createElement("a");
-      a.download = "qr-code.png";
-      a.href = c.toDataURL("image/png");
+      a.download = "qr-code.svg";
+      a.href = URL.createObjectURL(blob);
       a.click();
-      setError(null, "✅ PNG downloaded.");
+      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+      setError(null, "✅ SVG downloaded.");
     });
   });
 
