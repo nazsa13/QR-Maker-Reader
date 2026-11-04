@@ -45,6 +45,11 @@
       color: { dark: fillEl.value, light: backEl.value },
     }, function (err) {
       if (err) { setError(null, "⚠️ Couldn't render: " + err.message); return; }
+      // The QR library writes inline pixel width/height, which beats our CSS and
+      // stretches the canvas on narrow screens. Drop it so CSS sizes the preview
+      // (square, capped at 340px, never wider than its column).
+      canvas.style.width = "";
+      canvas.style.height = "";
       setError(null, "");
     });
   }

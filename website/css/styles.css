@@ -80,7 +80,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px clamp(14px, 4vw, 24px);
   border-bottom: 1px solid var(--border);
   background: var(--bg);
   transition: background 0.15s ease;
@@ -116,7 +118,7 @@ body {
 main {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 20px 60px;
+  padding: 0 clamp(14px, 4vw, 20px) 60px;
 }
 
 .hero { padding: 40px 0 8px; }
@@ -149,22 +151,28 @@ main {
 .tab.active { color: var(--text); border-bottom-color: var(--accent); }
 .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
-.panel { padding: 24px; }
+.panel { padding: clamp(14px, 4vw, 24px); }
 .hidden { display: none !important; }
 
+/* minmax(0, 1fr) lets tracks shrink below their content's intrinsic width, so
+   long <select> options or the canvas can't blow the grid past the card edge. */
 .generate-grid, .scan-grid {
   display: grid;
   gap: 24px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: start;
 }
-@media (max-width: 760px) {
-  .generate-grid, .scan-grid { grid-template-columns: 1fr; }
+.generate-form, .preview-col, .scan-cam, .scan-file { min-width: 0; }
+@media (max-width: 780px) {
+  .generate-grid, .scan-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
 
 label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
 textarea#qr-text {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  display: block;
   background: var(--surface-2);
   color: var(--text);
   border: 1px solid var(--border);
@@ -175,7 +183,15 @@ textarea#qr-text {
   transition: border-color 0.15s ease;
 }
 textarea#qr-text:focus { outline: none; border-color: var(--accent); }
-.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+/* auto-fit + minmax: two fields side by side when there is room, one when there isn't
+   (e.g. each half of the desktop grid), so the <select> never gets crushed. */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.field { min-width: 0; }
 input[type="color"] {
   width: 100%;
   height: 40px;
@@ -186,6 +202,8 @@ input[type="color"] {
 }
 input[type="number"], select {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   background: var(--surface-2);
   color: var(--text);
   border: 1px solid var(--border);
@@ -193,19 +211,26 @@ input[type="number"], select {
   padding: 8px 10px;
   font: inherit;
 }
+select { text-overflow: ellipsis; }
 .hint { font-size: 0.8rem; color: var(--muted); margin: 10px 0 0; }
 .hint a { color: var(--accent-2); }
 
 .preview-col { text-align: center; }
 #qr-canvas {
   width: min(100%, 340px);
+  max-width: 100%;
   height: auto;
   background: #fff;
   border-radius: 10px;
   image-rendering: pixelated;
 }
 .downlinks { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+@media (max-width: 420px) {
+  .downlinks { flex-direction: column; align-items: stretch; }
+  .downlinks .btn { width: 100%; }
+}
 .btn {
+  max-width: 100%;
   padding: 10px 16px;
   border-radius: 8px;
   border: 1px solid var(--border);
