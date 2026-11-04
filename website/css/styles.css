@@ -148,8 +148,13 @@ html[dir="rtl"] .brand {
   direction: rtl;
 }
 html[dir="rtl"] .row,
-html[dir="rtl"] .downlinks {
+html[dir="rtl"] .downlinks,
+html[dir="rtl"] table {
   direction: rtl;
+}
+html[dir="rtl"] th,
+html[dir="rtl"] td {
+  text-align: right;
 }
 
 main {
