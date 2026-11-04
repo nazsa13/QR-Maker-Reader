@@ -75,6 +75,74 @@
     langToggle.setAttribute("aria-pressed", lang === LANG_AR);
     document.getElementById("lang-en").style.display = lang === LANG_EN ? "inline" : "none";
     document.getElementById("lang-ar").style.display = lang === LANG_AR ? "inline" : "none";
+
+    // Arabic translations for UI text
+    const arTexts = {
+      qrTextPlaceholder: "رابط أو نص لترميز",
+      dlPng: "تحميل PNG",
+      dlSvg: "تحميل SVG",
+      copyImg: "نسخ للصورة",
+      genStatusOk: "✅",
+      genStatusErr: "⚠️",
+      hint: "تصحيح الأخطاء الأعلى يبقى القابل للمسح عند التعطيل الجزئي — #{seeFAQ}",
+      tabGenerate: "إنشاء QR",
+      tabScan: "مسح QR",
+      camStart: "بدء الكاميرا",
+      camStop: "إيقاف",
+      camStatusInit: "📷 اضبط على رمز QR — يتم التفريغ…",
+      camStatusOk: "✅已解码!",
+      browseFile: "اختر صورة"
+    };
+    const enTexts = {
+      qrTextPlaceholder: "URL or text to encode",
+      dlPng: "Download PNG",
+      dlSvg: "Download SVG",
+      copyImg: "Copy image",
+      genStatusOk: "✅",
+      genStatusErr: "⚠️",
+      hint: "Higher error correction stays scannable when partially covered — #{seeFAQ}",
+      tabGenerate: "Create QR",
+      tabScan: "Scan QR",
+      camStart: "Start camera",
+      camStop: "Stop",
+      camStatusInit: "📷 Point at a QR code — decoding…",
+      camStatusOk: "✅ Decoded!",
+      browseFile: "Click or drop a QR image here"
+    };
+
+    const t = lang === LANG_AR ? arTexts : enTexts;
+
+    // Apply placeholder and text translations
+    if (textEl) {
+      textEl.placeholder = t.qrTextPlaceholder;
+    }
+    $("dl-png").textContent = t.dlPng;
+    $("dl-svg").textContent = t.dlSvg;
+    $("copy-img").textContent = t.copyImg;
+    // genStatus is already handled via setError()
+    const hintEl = $("hint");
+    if (hintEl) {
+      hintEl.textContent = t.hint;
+    }
+    if (tabGenerate) {
+      tabGenerate.textContent = t.tabGenerate;
+    }
+    if (tabScan) {
+      tabScan.textContent = t.tabScan;
+    }
+    const camStartEl = $("cam-start");
+    if (camStartEl) {
+      camStartEl.textContent = t.camStart;
+    }
+    const camStopEl = $("cam-stop");
+    if (camStopEl) {
+      camStopEl.textContent = t.camStop;
+    }
+    const camStatusEl = $("cam-status");
+    if (camStatusEl) {
+      camStatusEl.textContent = t.camStatusInit;
+    }
+
     try { localStorage.setItem(CURRENT_LANG_KEY, lang); } catch (e) { /* ignore */ }
   }
 
