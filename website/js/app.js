@@ -62,33 +62,35 @@
   /* ---------------- Theme toggle ---------------- */
   const themeToggle = $("theme-toggle");
 
-  const THEME_KEY = "qr-maker-theme";
-  const DARK = "theme-dark";
-  const LIGHT = "theme-light";
+  /* ---------------- Language toggle ---------------- */
+  const langToggle = $("lang-toggle");
+  const CURRENT_LANG_KEY = "qr-maker-lang";
+  const LANG_EN = "en";
+  const LANG_AR = "ar";
 
-  function applyTheme(theme) {
-    document.body.classList.remove(DARK, LIGHT);
-    document.body.classList.add(theme === "light" ? LIGHT : DARK);
-    themeToggle.setAttribute("aria-pressed", String(theme === "light"));
-    try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* ignore */ }
+  function applyLang(lang) {
+    const html = document.documentElement;
+    html.setAttribute("lang", lang);
+    html.dir = lang === LANG_AR ? "rtl" : "ltr";
+    langToggle.setAttribute("aria-pressed", lang === LANG_AR);
+    document.getElementById("lang-en").style.display = lang === LANG_EN ? "inline" : "none";
+    document.getElementById("lang-ar").style.display = lang === LANG_AR ? "inline" : "none";
+    try { localStorage.setItem(CURRENT_LANG_KEY, lang); } catch (e) { /* ignore */ }
   }
 
-  function readSavedTheme() {
+  function readSavedLang() {
     let saved = null;
-    try { saved = localStorage.getItem(THEME_KEY); } catch (e) { /* ignore */ }
-    if (saved === "light" || saved === "dark") return saved;
-    return null;
+    try { saved = localStorage.getItem(CURRENT_LANG_KEY); } catch (e) { /* ignore */ }
+    if (saved === LANG_EN || saved === LANG_AR) return saved;
+    return LANG_EN; // default to English
   }
 
-  if (readSavedTheme() === "light") {
-    applyTheme("light");
-  } else {
-    applyTheme("dark");
-  }
+  const savedLang = readSavedLang();
+  applyLang(savedLang);
 
-  themeToggle.addEventListener("click", () => {
-    const next = document.body.classList.contains(LIGHT) ? "dark" : "light";
-    applyTheme(next);
+  langToggle.addEventListener("click", () => {
+    const next = langToggle.getAttribute("aria-pressed") === "true" ? LANG_EN : LANG_AR;
+    applyLang(next);
   });
 
   $("dl-png").addEventListener("click", () => {
@@ -110,24 +112,34 @@
   });
 
   /* SVG download */
-  $("dl-svg").addEventListener("click", () => {
+  /* Copy image (Clipboard API, graceful fallback) */
+  $("copy-img").addEventListener("click", async () => {
+    try {
+      const blob = await new Promise((res, rej) =>
+        canvas.toBlob((b) => (b ? res(b) : rej(new Error("no blob"))), "image/png")
+      );
+      await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+      setError(null, "✅ Image copied to clipboard.");
+    } catch (e) {
+      setError(null, "⚠️ Clipboard blocked — use Download instead.");
+    }
+  });
+
+  $("dl-png").addEventListener("click", () => {
     const data = textEl.value.trim();
     if (!data) { setError(null, "Type a link or text first."); return; }
-    window.QRCode.toString(data, {
-      type: "svg",
+    window.QRCode.toCanvas(canvas.cloneNode(), data, {
       width: Math.min(Math.max(parseInt(sizeEl.value, 10) || 512, 128), 2048),
       margin: 4,
       errorCorrectionLevel: ecEl.value,
       color: { dark: fillEl.value, light: backEl.value },
-    }, function (err, svg) {
+    }, function (err, c) {
       if (err) { setError(null, "⚠️ Export failed."); return; }
-      const blob = new Blob([svg], { type: "image/svg+xml" });
       const a = document.createElement("a");
-      a.download = "qr-code.svg";
-      a.href = URL.createObjectURL(blob);
+      a.download = "qr-code.png";
+      a.href = c.toDataURL("image/png");
       a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-      setError(null, "✅ SVG downloaded.");
+      setError(null, "✅ PNG downloaded.");
     });
   });
 
