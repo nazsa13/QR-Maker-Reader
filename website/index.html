@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -125,7 +125,12 @@
       <img src="/assets/favicon-32.png" alt="" width="32" height="32" />
       <span>QR Maker <span class="amp">&amp;</span> Reader</span>
     </a>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+    <div class="header-actions">
+      <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language" aria-pressed="false">
+        <span class="language-toggle__current">ع</span>
+        <span class="language-toggle__label">العربية</span>
+      </button>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
       <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="5"/>
         <line x1="12" y1="1" x2="12" y2="3"/>
@@ -140,52 +145,53 @@
       <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
       </svg>
-      <span>Theme</span>
-    </button>
+      <span data-i18n="theme">Theme</span>
+        </button>
+    </div>
   </header>
 
   <main>
     <section class="hero">
-      <h1>Free QR Code Generator &amp; Scanner — online, instant, and 100% private</h1>
-      <p>
+      <h1 data-i18n="heroTitle">Free QR Code Generator &amp; Scanner — online, instant, and 100% private</h1>
+      <p data-i18n="heroDescription">
         <strong>QR Maker &amp; Reader</strong> creates QR codes for links and text in seconds and reads QR codes
         straight from your camera — free, with no sign-up, no ads and no uploads.
-        <strong>Everything runs inside your browser</strong>: the QR you generate or the camera frame you scan
+        <strong data-i18n="heroBrowser">Everything runs inside your browser</strong>: the QR you generate or the camera frame you scan
         is never sent to any server.
       </p>
     </section>
 
-    <section class="app" id="app" aria-label="QR code tool">
+    <section class="app" id="app" aria-label="QR code tool" data-i18n-attr="aria-label:appLabel">
       <div class="tabs" role="tablist">
-        <button class="tab active" id="tab-generate" role="tab" aria-selected="true" aria-controls="panel-generate">Create QR</button>
-        <button class="tab" id="tab-scan" role="tab" aria-selected="false" aria-controls="panel-scan">Scan QR</button>
+        <button class="tab active" id="tab-generate" role="tab" aria-selected="true" aria-controls="panel-generate" data-i18n="createQr">Create QR</button>
+        <button class="tab" id="tab-scan" role="tab" aria-selected="false" aria-controls="panel-scan" data-i18n="scanQr">Scan QR</button>
       </div>
 
       <!-- ===== GENERATE ===== -->
       <div class="panel" id="panel-generate" role="tabpanel" aria-labelledby="tab-generate">
         <div class="generate-grid">
           <form class="generate-form" onsubmit="return false;">
-            <label for="qr-text">URL or text to encode</label>
-            <textarea id="qr-text" rows="3" placeholder="https://example.com — or any text, Wi-Fi string, contact data…" spellcheck="false"></textarea>
+            <label for="qr-text" data-i18n="encodeLabel">URL or text to encode</label>
+            <textarea id="qr-text" rows="3" placeholder="https://example.com — or any text, Wi-Fi string, contact data…" data-i18n-attr="placeholder:encodePlaceholder" spellcheck="false"></textarea>
 
             <div class="row">
               <div class="field">
-                <label for="qr-fill">Dot color</label>
+                <label for="qr-fill" data-i18n="dotColor">Dot color</label>
                 <input type="color" id="qr-fill" value="#0d0f1a" />
               </div>
               <div class="field">
-                <label for="qr-back">Background</label>
+                <label for="qr-back" data-i18n="background">Background</label>
                 <input type="color" id="qr-back" value="#ffffff" />
               </div>
             </div>
 
             <div class="row">
               <div class="field">
-                <label for="qr-size">Size (px)</label>
+                <label for="qr-size" data-i18n="sizePx">Size (px)</label>
                 <input type="number" id="qr-size" min="128" max="2048" step="32" value="512" />
               </div>
               <div class="field">
-                <label for="qr-ec">Error correction</label>
+                <label for="qr-ec" data-i18n="errorCorrection">Error correction</label>
                 <select id="qr-ec">
                   <option value="L">L — low (7%)</option>
                   <option value="M" selected>M — medium (15%)</option>
@@ -194,15 +200,15 @@
                 </select>
               </div>
             </div>
-            <p class="hint">Higher error correction stays scannable when partially covered — <a href="#faq">see FAQ</a>.</p>
+            <p class="hint"><span data-i18n="errorHint">Higher error correction stays scannable when partially covered — </span><a href="#faq" data-i18n="seeFaq">see FAQ</a>.</p>
           </form>
 
           <div class="preview-col">
             <canvas id="qr-canvas" width="512" height="512" aria-label="QR code preview"></canvas>
             <div class="downlinks">
-              <button class="btn primary" id="dl-png">Download PNG</button>
-              <button class="btn" id="dl-svg">Download SVG</button>
-              <button class="btn" id="copy-img">Copy image</button>
+              <button class="btn primary" id="dl-png" data-i18n="downloadPng">Download PNG</button>
+              <button class="btn" id="dl-svg" data-i18n="downloadSvg">Download SVG</button>
+              <button class="btn" id="copy-img" data-i18n="copyImage">Copy image</button>
             </div>
             <p id="gen-status" class="status" role="status"></p>
           </div>
@@ -213,21 +219,21 @@
       <div class="panel hidden" id="panel-scan" role="tabpanel" aria-labelledby="tab-scan">
         <div class="scan-grid">
           <div class="scan-cam">
-            <h2>Scan with your camera</h2>
+            <h2 data-i18n="scanCamera">Scan with your camera</h2>
             <video id="video" muted playsinline></video>
             <canvas id="cam-canvas" class="hidden"></canvas>
             <div class="downlinks">
-              <button class="btn primary" id="cam-start">Start camera</button>
-              <button class="btn" id="cam-stop" disabled>Stop</button>
+              <button class="btn primary" id="cam-start" data-i18n="startCamera">Start camera</button>
+              <button class="btn" id="cam-stop" disabled data-i18n="stop">Stop</button>
             </div>
             <p class="status" id="cam-status">Camera access needs HTTPS. Nothing is uploaded — frames stay on your device.</p>
           </div>
 
           <div class="scan-file">
-            <h2>Decode an image</h2>
+            <h2 data-i18n="decodeImage">Decode an image</h2>
             <label class="dropzone" id="dropzone" for="file-input">
               <input type="file" id="file-input" accept="image/*" hidden />
-              <span>Click or drop a QR image here</span>
+              <span data-i18n="dropImage">Click or drop a QR image here</span>
             </label>
             <p class="status" id="scan-status" role="status"></p>
             <div id="scan-result" class="result hidden"></div>
@@ -237,10 +243,10 @@
     </section>
 
     <section class="why">
-      <h2>Why use QR Maker &amp; Reader instead of typical QR websites?</h2>
+      <h2 data-i18n="whyTitle">Why use QR Maker &amp; Reader instead of typical QR websites?</h2>
       <table>
         <thead>
-          <tr><th scope="col">Feature</th><th scope="col">QR Maker &amp; Reader</th><th scope="col">Typical QR sites</th></tr>
+          <tr><th scope="col" data-i18n="feature">Feature</th><th scope="col">QR Maker &amp; Reader</th><th scope="col" data-i18n="typicalSites">Typical QR sites</th></tr>
         </thead>
         <tbody>
           <tr><td>Price</td><td>Free forever, MIT open source</td><td>Free tier with usage limits; “dynamic” QRs expire</td></tr>
@@ -253,7 +259,7 @@
     </section>
 
     <section class="faq" id="faq">
-      <h2>QR code FAQ</h2>
+      <h2 data-i18n="faqTitle">QR code FAQ</h2>
 
       <h3>Is this QR code generator really free?</h3>
       <p>Yes — 100% free with no sign-up, no accounts, no ads and no limits. The <a href="https://github.com/nazsa13/QR-Maker-Reader" rel="noopener noreferrer" target="_blank">source code is MIT-licensed and on GitHub</a>, so you can also run it locally.</p>
@@ -275,7 +281,7 @@
     </section>
 
     <section class="open-source">
-      <h2>Prefer the command line?</h2>
+      <h2 data-i18n="cliTitle">Prefer the command line?</h2>
       <p>
         The <a href="https://github.com/nazsa13/QR-Maker-Reader" rel="noopener noreferrer" target="_blank">QR Maker &amp; Reader repo</a> includes a Python CLI:
         <code>python qr_cli.py generate "https://example.com" -o link.png</code> generates, and

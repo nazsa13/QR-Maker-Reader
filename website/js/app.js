@@ -59,6 +59,107 @@
   );
 
   /* PNG download */
+  /* ---------------- Language toggle ---------------- */
+  const languageToggle = $("language-toggle");
+  const languageLabel = languageToggle.querySelector(".language-toggle__label");
+  const languageCurrent = languageToggle.querySelector(".language-toggle__current");
+  const LANGUAGE_KEY = "qr-maker-language";
+  let currentLanguage = "en";
+
+  const translations = {
+    en: {
+      languageLabel: "العربية",
+      languageCurrent: "ع",
+      theme: "Theme",
+      heroTitle: "Free QR Code Generator & Scanner — online, instant, and 100% private",
+      heroDescription: "QR Maker & Reader creates QR codes for links and text in seconds and reads QR codes straight from your camera — free, with no sign-up, no ads and no uploads. Everything runs inside your browser: the QR you generate or the camera frame you scan is never sent to any server.",
+      appLabel: "QR code tool",
+      createQr: "Create QR",
+      scanQr: "Scan QR",
+      encodeLabel: "URL or text to encode",
+      encodePlaceholder: "https://example.com — or any text, Wi-Fi string, contact data…",
+      dotColor: "Dot color",
+      background: "Background",
+      sizePx: "Size (px)",
+      errorCorrection: "Error correction",
+      errorHint: "Higher error correction stays scannable when partially covered — ",
+      seeFaq: "see FAQ",
+      downloadPng: "Download PNG",
+      downloadSvg: "Download SVG",
+      copyImage: "Copy image",
+      scanCamera: "Scan with your camera",
+      startCamera: "Start camera",
+      stop: "Stop",
+      decodeImage: "Decode an image",
+      dropImage: "Click or drop a QR image here",
+      whyTitle: "Why use QR Maker & Reader instead of typical QR websites?",
+      feature: "Feature",
+      typicalSites: "Typical QR sites",
+      faqTitle: "QR code FAQ",
+      cliTitle: "Prefer the command line?",
+    },
+    ar: {
+      languageLabel: "English",
+      languageCurrent: "EN",
+      theme: "المظهر",
+      heroTitle: "منشئ وقارئ رموز QR مجاني — فوري، عبر الإنترنت، وخصوصي 100٪",
+      heroDescription: "ينشئ QR Maker & Reader رموز QR للروابط والنصوص خلال ثوانٍ ويقرأها مباشرة من الكاميرا — مجانًا، بلا تسجيل أو إعلانات أو رفع للملفات. كل شيء يعمل داخل متصفحك، ولا يتم إرسال الرمز الذي تنشئه أو إطار الكاميرا الذي تمسحه إلى أي خادم.",
+      appLabel: "أداة رموز QR",
+      createQr: "إنشاء QR",
+      scanQr: "مسح QR",
+      encodeLabel: "الرابط أو النص المراد ترميزه",
+      encodePlaceholder: "https://example.com — أو أي نص أو شبكة Wi‑Fi أو بيانات اتصال…",
+      dotColor: "لون النقاط",
+      background: "الخلفية",
+      sizePx: "الحجم (بكسل)",
+      errorCorrection: "تصحيح الأخطاء",
+      errorHint: "يحافظ التصحيح الأعلى على قابلية المسح عند تغطية الرمز جزئيًا — ",
+      seeFaq: "راجع الأسئلة الشائعة",
+      downloadPng: "تنزيل PNG",
+      downloadSvg: "تنزيل SVG",
+      copyImage: "نسخ الصورة",
+      scanCamera: "المسح بالكاميرا",
+      startCamera: "بدء الكاميرا",
+      stop: "إيقاف",
+      decodeImage: "فك ترميز صورة",
+      dropImage: "انقر أو أسقط صورة QR هنا",
+      whyTitle: "لماذا تستخدم QR Maker & Reader بدلًا من مواقع QR التقليدية؟",
+      feature: "الميزة",
+      typicalSites: "مواقع QR التقليدية",
+      faqTitle: "الأسئلة الشائعة حول QR",
+      cliTitle: "تفضل سطر الأوامر؟",
+    },
+  };
+
+  function applyLanguage(language) {
+    currentLanguage = language === "ar" ? "ar" : "en";
+    const strings = translations[currentLanguage];
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir = currentLanguage === "ar" ? "rtl" : "ltr";
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+      const key = element.dataset.i18n;
+      if (strings[key]) element.textContent = strings[key];
+    });
+    document.querySelectorAll("[data-i18n-attr]").forEach((element) => {
+      element.dataset.i18nAttr.split(",").forEach((entry) => {
+        const [attribute, key] = entry.split(":");
+        if (attribute && key && strings[key]) element.setAttribute(attribute, strings[key]);
+      });
+    });
+    languageLabel.textContent = strings.languageLabel;
+    languageCurrent.textContent = strings.languageCurrent;
+    languageToggle.setAttribute("aria-pressed", String(currentLanguage === "ar"));
+    languageToggle.setAttribute("aria-label", currentLanguage === "ar" ? "Switch to English" : "التبديل إلى العربية");
+    try { localStorage.setItem(LANGUAGE_KEY, currentLanguage); } catch (e) { /* ignore */ }
+  }
+
+  let savedLanguage = null;
+  try { savedLanguage = localStorage.getItem(LANGUAGE_KEY); } catch (e) { /* ignore */ }
+  applyLanguage(savedLanguage === "ar" ? "ar" : "en");
+  languageToggle.addEventListener("click", () => {
+    applyLanguage(currentLanguage === "ar" ? "en" : "ar");
+  });
+
   /* ---------------- Theme toggle ---------------- */
   const themeToggle = $("theme-toggle");
 
