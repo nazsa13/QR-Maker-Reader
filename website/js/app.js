@@ -126,7 +126,7 @@
       faqScanAnswer: "Open this page on your phone, switch to <strong>Scan QR</strong> and allow camera access. You can also decode a QR from an image you already saved — just drop it in the panel.",
       cliDescription: "The <a href=\"https://github.com/nazsa13/QR-Maker-Reader\" rel=\"noopener noreferrer\" target=\"_blank\">QR Maker &amp; Reader repo</a> includes a Python CLI: <code>python qr_cli.py generate \"https://example.com\" -o link.png</code> generates, and <code>python qr_cli.py read link.png</code> decodes — the same privacy guarantee, no browser needed.",
       github: "GitHub",
-      madeBy: "Made by",
+      madeBy: "Made by <a class=\"site-credit__name\" href=\"https://nazir.sagherji.com\" rel=\"noopener noreferrer\" target=\"_blank\">Mhd Nazir Sagherji</a>",
       footerBuilt: "Built with <strong>zero trackers</strong> · QR codes generated here never expire",
     },
     ar: {
@@ -188,7 +188,7 @@
       faqScanAnswer: "افتح هذه الصفحة على هاتفك، وانتقل إلى <strong>مسح QR</strong> واسمح بالوصول إلى الكاميرا. يمكنك أيضًا فك ترميز QR من صورة محفوظة — ما عليك سوى إسقاطها في اللوحة.",
       cliDescription: "يتضمن <a href=\"https://github.com/nazsa13/QR-Maker-Reader\" rel=\"noopener noreferrer\" target=\"_blank\">مستودع QR Maker &amp; Reader</a> أداة سطر أوامر بلغة Python: ينشئ الأمر <code>python qr_cli.py generate \"https://example.com\" -o link.png</code> رمزًا، ويفك الأمر <code>python qr_cli.py read link.png</code> ترميزه — مع ضمان الخصوصية نفسه ودون الحاجة إلى متصفح.",
       github: "GitHub",
-      madeBy: "صُنع بواسطة",
+      madeBy: "صُنع بواسطة <a class=\"site-credit__name\" href=\"https://nazir.sagherji.com\" rel=\"noopener noreferrer\" target=\"_blank\">محمد نذير صاغرجي</a>",
       footerBuilt: "مبني بلا <strong>أي أدوات تتبع</strong> · رموز QR التي تنشئها هنا لا تنتهي صلاحيتها",
     },
   };

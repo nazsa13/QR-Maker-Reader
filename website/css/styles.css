@@ -368,18 +368,13 @@ tbody td { color: var(--muted); }
   font-size: 0.9rem;
 }
 .site-credit__name {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
   color: var(--text);
   font-weight: 600;
   text-decoration: none;
+  white-space: nowrap;
   border-bottom: 1px solid transparent;
   transition: border-color 0.15s ease;
 }
 .site-credit__name:hover,
 .site-credit__name:focus-visible { border-bottom-color: var(--accent-2); }
 .site-credit__name:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.site-credit__sep { color: var(--muted); font-weight: 400; }
