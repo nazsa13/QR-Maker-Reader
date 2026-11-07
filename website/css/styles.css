@@ -354,4 +354,32 @@ tbody td { color: var(--muted); }
   font-size: 0.85rem;
   text-align: center;
 }
+.site-footer p { margin: 0 0 6px; }
+.site-footer p:last-child { margin-bottom: 0; }
 .site-footer a { color: var(--accent-2); }
+
+.site-credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px !important;
+  font-size: 0.9rem;
+}
+.site-credit__name {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+.site-credit__name:hover,
+.site-credit__name:focus-visible { border-bottom-color: var(--accent-2); }
+.site-credit__name:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.site-credit__sep { color: var(--muted); font-weight: 400; }
